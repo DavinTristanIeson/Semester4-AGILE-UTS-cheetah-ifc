@@ -1,4 +1,4 @@
-# Sprint 1 (27/04/2023 s/d 28/04/2023)
+# Sprint 1 (28/04/2023 s/d 29/04/2023)
 
 ### Sprint Goal
 - Memberi pengguna kemampuan untuk mendaftarkan akun dan masuk ke aplikasi melalui akun tersebut
