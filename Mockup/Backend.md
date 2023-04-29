@@ -41,7 +41,7 @@ Response:
     - message: "Email already in use"
 
 Set Cookie (JIKA 201 Created):
-- anonymous_id (number): ID yg bersifat untuk mengidentifikasi pengguna selama cookie tidak dihapus, digunakan untuk menyimpan respon survey dan poll pengguna. Jika pengguna sudah ada cookie dengan anonymous_id, maka tidak di-override.
+- anonymous_id (string): ID yg bersifat untuk mengidentifikasi pengguna selama cookie tidak dihapus, digunakan untuk menyimpan respon survey dan poll pengguna. Jika pengguna sudah ada cookie dengan anonymous_id, maka tidak di-override.
 - user_id (number): ID dari pengguna
 
 ### POST /api/accounts/login

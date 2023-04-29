@@ -64,7 +64,7 @@
 - Membuat komponen-komponen untuk jawaban pertanyaan di Figma [3]
 - Endpoint untuk mengakses survey tertentu berdasarkan ID [2]
 - Endpoint untuk menerima dan menyimpan respon dari pertanyaan [2]
-- Diagram tabel yang berhubungan dengan respon [2]
+- Diagram tabel yang berhubungan dengan respon [1]
 
 2. Sebagai pembuat poll, saya ingin dapat mengajukan pertanyaan secara real-time untuk semua partisipan agar dapat menerima tanggapan secara real-time.
 - Membuat tampilan halaman *Poll Manager* di Figma [3]
@@ -86,3 +86,5 @@
 5. Sebagai pembuat poll dan partisipan, saya ingin melihat jawaban poll orang lain secara real-time (jika diperbolehkan oleh pembuat poll).
 - Tampilan jawaban orang lain di halaman *Answer Poll* di Figma [2]
 - Endpoint untuk mengambil semua jawaban untuk pertanyaan sekarang poll [1]
+
+**Total Story Point**: 35
