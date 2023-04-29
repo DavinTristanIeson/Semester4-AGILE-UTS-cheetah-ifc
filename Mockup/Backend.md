@@ -132,6 +132,7 @@ Request (multipart-formdata):
 - description (string)
 - close_time (string): Kapan survey secara otomatis ditutup dalam format waktu ISO
 - is_public (boolean)
+- are_results_open (boolean): Apakah orang lain dapat mengakses hasil survey setelah mengisi survey tanpa diberikan link?
 - questions[]
     - type: string
     - question: string
@@ -158,6 +159,7 @@ Response:
     - link (string)
     - close_time (string): Kapan survey terakhir diubah dalam format waktu ISO
     - thumbnail (string)
+    - are_results_open (boolean): Apakah orang lain dapat mengakses hasil survey setelah mengisi survey tanpa diberikan link?
     - questions[]
         - id (number)
         - type (string)
@@ -207,6 +209,8 @@ Request (multipart/form-data):
 - description (string?)
 - close_time (string?): Kapan survey otomatis ditutup dalam format waktu ISO
 - questions (string?)
+- is_public (boolean?)
+- are_results_open (boolean?): Apakah orang lain dapat mengakses hasil survey setelah mengisi survey tanpa diberikan link?
 
 Request Files:
 - thumbnail?
