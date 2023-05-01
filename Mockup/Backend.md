@@ -157,10 +157,11 @@ Request (multipart-formdata):
 - is_public (boolean)
 - are_results_open (boolean): Apakah orang lain dapat mengakses hasil survey setelah mengisi survey tanpa diberikan link?
 - questions[]
-  - type: string
-  - question: string
-  - required: boolean
+  - type (string)
+  - question (string)
+  - required (boolean)
   - image_name (string?)
+  - options (string[]?)
 
 Request Files:
 
@@ -191,9 +192,7 @@ Response:
     - question (string)
     - required (boolean)
     - image? (string)
-    - options[]?
-      - id (number)
-      - label (string)
+    - options (string[]?)
 - 400 Bad Request: Jika format tidak sesuai
   - message: "Expected fields: title, description, close_time, thumbnail, is_public, questions"
 - 400 Bad Request: Jika close_time bukan format date ISO
@@ -203,6 +202,34 @@ Response:
 - 400 Bad Request: Jumlah pertanyaan yang disediakan image_name tidak sama dengan jumlah question_images yang disediakan
   - message: "Number of questions is different from number of provided question images"
 - 401 Unauthorized: Jika tidak ada cookie dengan nilai user_id yang valid
+
+### GET /api/polls/:id
+
+Mengambil informasi poll tertentu jika sudah berpartisipasi dalam poll atau merupakan pemilik poll
+
+Cookie:
+- anonymous_id
+- user_id
+
+Response:
+- 200 OK
+    - creator
+    - id (number)
+    - email (string)
+    - name (string)
+    - description (string)
+    - pfp (string)
+  - title (string)
+  - description (string)
+  - link (string)
+  - start_time (string)
+  - end_time (string)
+  - thumbnail (string)
+  - are_results_open (boolean)
+- 404 Not Found: Tidak ada poll dengan ID tersebut
+  - message: "No polls found with that ID"
+- 401 Unauthorized: Penjawab anonim tidak masuk ke dalam poll atau hasil poll tidak dibuka untuk umum
+  - message: "You didn't join the poll." or message: "The results of this poll can only be viewed by its creator."
 
 ### PUT /api/polls/:id
 
@@ -228,7 +255,7 @@ Response:
 - 401 Unauthorized: Jika tidak ada cookie dengan nilai user_id yang valid
 - 401 Unauthorized: Jika user_id dalam cookie bukan owner dari poll tersebut
 
-### PUT /api/surveys
+### PUT /api/surveys/:id
 
 Mengedit properti dari survey dengan id yang ditentukan sesuai dengan field yang disediakan.
 
@@ -324,7 +351,8 @@ Request:
 
 - type (string)
 - question (string)
-- question_options (string[]?)
+- options (string[]?)
+
 
 Request Files:
 
@@ -333,13 +361,13 @@ Request Files:
 Response:
 
 - 201 Created: Sukses menambah pertanyaan
-  - id (number)
-  - type (string)
-  - question (string)
-  - question_options (string[]?)
-  - image (string): URL ke gambar
+    - id (number)
+    - type (string)
+    - question (string)
+    - image? (string)
+    - options (string[]?)
 - 400 Bad Request: Format tidak sesuai
-  - message: "Expected fields: type, question, and question_options if the type is 'checklist' or 'choice'"
+  - message: "Expected fields: type, question, and options if the type is 'checklist' or 'choice'"
 - 404 Not Found: Tidak ada poll dengan ID tersebut
   - message: "No surveys found with that ID"
 - 401 Unauthorized: Jika user_id tidak sesuai dengan ID pemilik poll
@@ -348,11 +376,11 @@ Real-Time Server => Client (Event: "newQuestion")
 
 - poll_id (number)
 - question:
-  - id (number)
-  - type (string)
-  - question (string)
-  - question_options (string[]?)
-  - image (string): URL ke gambar
+    - id (number)
+    - type (string)
+    - question (string)
+    - image? (string)
+    - options (string[]?)
 
 ### DELETE /api/polls/:id
 
@@ -392,7 +420,7 @@ Request:
 Response:
 
 - 201 Created: Berhasil menambahkan respon
-  - []
+  - []: Respon dari partisipan lain
     - respondee_alias (string)
     - type (string)
     - answer (string|string[])
@@ -411,7 +439,9 @@ Real-Time Server => Client (Event: "newResponse")
 
 - poll_id (number)
 - question_id (number)
-- response - respondee_alias (string) - type (string) - answer (string|string[])
+- respondee_alias (string)
+- type (string)
+- answer (string|string[])
 
 ### GET /api/polls/:id/responses/current
 
@@ -444,12 +474,21 @@ Cookie:
 Response:
 
 - 200 OK
+  - id (number)
+  - creator
+    - id (number)
+    - email (string)
+    - name (string)
+    - description (string)
+    - pfp (string)
   - title (string)
   - description (string)
-  - close_time (string)
-  - thumbnail (string)
+  - last_modified (string)
   - is_public (boolean)
-  - are_results_open (boolean)
+  - link (string)
+  - close_time (string): Kapan survey terakhir diubah dalam format waktu ISO
+  - thumbnail (string)
+  - are_results_open (boolean): Apakah orang lain dapat mengakses hasil survey setelah mengisi survey tanpa diberikan link?
   - responses_count (number)
   - summary[]
     - id (number)
@@ -474,12 +513,6 @@ Cookie:
 Response:
 
 - 200 OK
-  - title (string)
-  - description (string)
-  - close_time (string)
-  - thumbnail (string)
-  - is_public (boolean)
-  - are_results_open (boolean)
   - respondee_alias (string)
   - questions[]
     - type (string)
