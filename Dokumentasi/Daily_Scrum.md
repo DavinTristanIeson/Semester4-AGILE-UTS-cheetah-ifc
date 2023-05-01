@@ -78,3 +78,73 @@
 
 ### Sisa
 6 - 6 = 0pt
+
+# Sprint 1 (28/04/2023 s/d 29/04/2023)
+
+## 30 April 2023
+
+### Davin Tristan Ieson
+
+**Sudah**:
+- Membuat diagram database untuk tabel yang berhubungan dengan respon (29 April) [1]
+- Membantu membuat garisbesar design di Figma (29 April)
+- Mendeskripsikan endpoint-endpoint yang berhubungan dengan menjawab survey/poll [17]
+
+**Akan**:
+- Memperbaiki desain setelah kembali ke Medan
+
+**Kendala**:
+- Lagi di luar kota dan tidak bisa mengakses komputer, sehingga harus mengerjakan hal yang berhubungan dengan Figma dan Visual Paradigm pada tanggal 29
+- Sulit mengkomunikasikan gambaran design untuk anggota lain
+
+**Solusi**:
+- Anggota lain yang mengerjakan *design* Figma
+
+### Jansen Loman
+
+**Sudah**:
+- Membuat tampilan *Answer Poll* [5]
+- Mengerjakan tampilan lain di Figma yang tidak dispesifikasikan pada Sprint Planning
+**Akan**:
+- Mempercantik *design*
+**Kendala**:
+- Sedang diluar untuk sebagian besar hari
+
+### Vincent Tandera
+
+**Sudah**:
+- Menyelesaikan tampilan *Poll Editor* [3]
+- Menyelesaikan tampilan ketika poll berakhir
+- Berkolaborasi dengan Jansen Loman untuk membuat *design* Figma [6 bersama Jansen]
+
+**Kendala**:
+- Lambat karena turut mengerjakan pekerjaan lain yang menghambat proses *design*
+- Komunikasi tentang *design* cukup sulit
+
+### Sisa
+35 - 26 = 9
+
+## 1 Mei 2023
+
+### Davin Tristan Ieson
+
+**Sudah**:
+- Memperbaiki deskripsi endpoint dan diagram *database* sedikit
+- *Polish design* Figma
+**Akan**:
+- Melanjutkan tugas *sprint* berikutnya
+**Kendala**:
+- Sebagian besar hari tidak bisa melakukan apa-apa karena perjalanan pulang ke Medan memakan waktu lama
+
+### Jansen Loman
+
+**Sudah**:
+- Menyelesaikan *design* Figma untuk halaman yang belum diselesaikan [9]
+**Kendala**:
+- Pemadaman listrik saat mengerjakan projek
+
+### Vincent Tandera
+-
+
+### Sisa
+9 - 9 = 0
