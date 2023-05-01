@@ -126,7 +126,7 @@
 - Memberikan akses kepada pembuat survey/poll untuk share link untuk membagikan hasil [2]
     - Tombol share untuk membuka popup
     - Pengaturan dalam popup seperti mengatur apakah partisipan poll/survey boleh melihat hasil, dan link untuk membagikan hasil
-- Update backend untuk menyimpan link hasil [2]
+- Update backend untuk menyimpan link hasil [1]
     - Update skema database untuk menyimpan link hasil dari survey/poll
     - Update endpoint agar mengakomodasikan link hasil
 
@@ -139,6 +139,6 @@
 
 7. dan sebagainya
     - Endpoint untuk mengambil tampilan/*frontend* dari aplikasi [1]
-    - Kontrol akses informasi dari endpoint, contohnya ketika mengambil info survey, pemilik akan mendapat semua info tapi penjawab tidak akan mendapat link dan link hasil karena bukan untuk dilihat mereka [2]
+    - Kontrol akses informasi dari endpoint, contohnya ketika mengambil info survey, pemilik akan mendapat semua info tapi penjawab tidak akan mendapat link dan link hasil karena bukan untuk dilihat mereka [1]
 
-**Total Story Point**: 32
+**Total Story Point**: 30

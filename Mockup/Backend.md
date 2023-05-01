@@ -133,7 +133,8 @@ Response:
     - pfp (string)
   - title (string)
   - description (string)
-  - link (string): Invite link
+  - link (string): Link untuk masuk poll
+  - result_link (string): Link untuk melihat hasil poll
   - start_time (string)
   - end_time (string|null): Kapan poll dihentikan. Jika poll masih berjalan maka nilai ini adalah null.
   - thumbnail (string): URL ke gambar dari poll
@@ -182,7 +183,8 @@ Response:
   - description (string)
   - last_modified (string)
   - is_public (boolean)
-  - link (string)
+  - link (string): Link mengakses survey
+  - result_link (string): Link melihat hasil survey
   - close_time (string): Kapan survey terakhir diubah dalam format waktu ISO
   - thumbnail (string)
   - are_results_open (boolean): Apakah orang lain dapat mengakses hasil survey setelah mengisi survey tanpa diberikan link?
@@ -213,7 +215,8 @@ Cookie:
 
 Response:
 - 200 OK
-    - creator
+  - id (number)
+  - creator
     - id (number)
     - email (string)
     - name (string)
@@ -221,7 +224,8 @@ Response:
     - pfp (string)
   - title (string)
   - description (string)
-  - link (string)
+  - link (string?): Hanya ada jika user_id merupakan id creator
+  - result_link (string?): Hanya ada jika user_id merupakan id creator
   - start_time (string)
   - end_time (string)
   - thumbnail (string)
@@ -299,7 +303,29 @@ Cookie:
 Response:
 
 - 200 OK: Survey ditemukan
-  (copas format response survey)
+  - id (number)
+  - creator
+    - id (number)
+    - email (string)
+    - name (string)
+    - description (string)
+    - pfp (string)
+  - title (string)
+  - description (string)
+  - last_modified (string)
+  - is_public (boolean)
+  - link (string?): Hanya ada jika user_id merupakan id creator
+  - result_link (string?): Hanya ada jika user_id merupakan id creator
+  - close_time (string): Kapan survey terakhir diubah dalam format waktu ISO
+  - thumbnail (string)
+  - are_results_open (boolean): Apakah orang lain dapat mengakses hasil survey setelah mengisi survey tanpa diberikan link?
+  - questions[]
+    - id (number)
+    - type (string)
+    - question (string)
+    - required (boolean)
+    - image? (string)
+    - options (string[]?)
 - 404 Not Found: Survey tidak ditemukan
   - message: "No surveys found with that ID"
 - 401 Unauthorized: Survey tidak diberikan akses ke publik dan user_id tidak sesuai dengan id pemilik
@@ -335,7 +361,7 @@ Response:
 - 401 Unauthorized: Penjawab anonim belum masuk ke dalam poll
   - message: "You haven't joined into the poll yet"
 
-Set Cookie jika tidak ada anonymous_id:
+Set Cookie (JIKA tidak ada anonymous_id):
 
 - anonymous_id (string)
 
@@ -452,6 +478,12 @@ Cookie:
 - anonymous_id
 
 Response:
+- 200 OK
+  - id (number)
+  - type (string)
+  - question (string)
+  - respondee_alias (string)
+  - answer (string|string[])
 
 - 403 Forbidden: Poll sudah ditutup
   - message: "The poll has already ended."
@@ -540,6 +572,12 @@ Response:
 - 200 OK: Otorisasi valid
   - title (string)
   - description (string)
+  - creator
+    - id (number)
+    - email (string)
+    - name (string)
+    - description (string)
+    - pfp (string)
   - start_time (string)
   - end_time (string)
   - thumbnail (string)
