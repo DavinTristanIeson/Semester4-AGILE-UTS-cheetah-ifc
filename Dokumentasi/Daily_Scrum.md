@@ -79,7 +79,7 @@
 ### Sisa
 6 - 6 = 0pt
 
-# Sprint 1 (28/04/2023 s/d 29/04/2023)
+# Sprint 2 (30/04/2023 s/d 01/05/2023)
 
 ## 30 April 2023
 
@@ -105,8 +105,10 @@
 **Sudah**:
 - Membuat tampilan *Answer Poll* [5]
 - Mengerjakan tampilan lain di Figma yang tidak dispesifikasikan pada Sprint Planning
+
 **Akan**:
 - Mempercantik *design*
+
 **Kendala**:
 - Sedang diluar untuk sebagian besar hari
 
@@ -131,8 +133,10 @@
 **Sudah**:
 - Memperbaiki deskripsi endpoint dan diagram *database* sedikit
 - *Polish design* Figma
+
 **Akan**:
 - Melanjutkan tugas *sprint* berikutnya
+
 **Kendala**:
 - Sebagian besar hari tidak bisa melakukan apa-apa karena perjalanan pulang ke Medan memakan waktu lama
 
@@ -140,6 +144,7 @@
 
 **Sudah**:
 - Menyelesaikan *design* Figma untuk halaman yang belum diselesaikan [9]
+
 **Kendala**:
 - Pemadaman listrik saat mengerjakan projek
 
@@ -148,3 +153,37 @@
 
 ### Sisa
 9 - 9 = 0
+
+# Sprint 3 (02/05/2023 s/d 03/05/2023)
+
+## 02 Mei 2023
+
+### Davin Tristan Ieson
+
+**Sudah**:
+- Membuat tampilan-tampilan yang berhubungan dengan *browsing* survey/poll [8]
+- Update backend agar meng-akomodasikan link hasil dan partisipasi poll [2]
+**Akan**:
+- Lanjut mengerjakan makalah
+
+### Jansen Loman
+
+**Sudah**:
+- Membuat endpoint untuk *backend*. [12]
+
+**Akan**:
+- Membuat endpoint untuk akses *frontend*.
+
+### Vincent Tandera
+
+**Sudah**:
+- Menyelesaikan halaman profil beserta fitur-fiturnya, dan tampilan yang berhubungan dengan *share link*. [9]
+
+**Akan**:
+- Mengevaluasi hasil *design* di Figma.
+
+**Kendala**:
+- Terus-menerus harus keluar dan membeli sesuatu.
+
+### Sisa
+32 - 31 = 1
