@@ -14,6 +14,8 @@ Response: Jawaban yang dikembalikan _server_ ke _client_
 
 <_Field_>(<_type_>[]): _Field_ dengan tipe _array_
 
+Query: Bagian query dari URL (seperti ?\<key\>=\<value\>)
+
 # Endpoints
 
 ### POST /api/accounts/register
@@ -102,6 +104,49 @@ Response:
   - pfp (string): Link ke _Profile Picture_ dari pengguna
 - 404 Not Found: Menunjukkan bahwa tidak ada akun pengguna yang ditemukan berdasarkan ID yang diberikan.
   - message: "No accounts found with that ID"
+
+### PUT /api/accounts/:id
+
+Endpoint ini digunakan untuk memodifikasi informasi akun pengguna yang terdaftar.
+
+Cookie:
+- user_id
+
+Request (multipart/form-data):
+- email (string?): Alamat email baru pengguna.
+- password (string?): Kata sandi baru pengguna.
+- name (string?): Nama baru pengguna.
+- description (string?): Deskripsi baru pengguna.
+
+Request Files:
+- pfp?: File gambar profil baru pengguna (Profil Picture).
+
+Response:
+
+- 200 OK: Memberikan respons dengan data akun pengguna yang telah dimodifikasi.
+  - id (number)
+  - email (string)
+  - name (string)
+  - description (string)
+  - pfp (string): Link ke _Profile Picture_ dari pengguna
+- 404 Not Found: Tidak menemukan akun dengan ID tersebut
+  - message: "User account not found.""
+- 304 Not Modified: Tidak ada yang diubah.
+- 401 Unauthorized: user_id tidak sesuai dengan id
+
+### DELETE /api/accounts/:id
+
+Endpoint untuk menghapus akun berdasarkan ID
+
+Cookie:
+- user_id
+
+Response:
+
+- 200 OK: Akun sukses dihapus
+- 404 Not Found: Tidak menemukan akun dengan ID tersebut
+  - message: "User account not found.""
+- 401 Unauthorized: user_id tidak sesuai dengan id
 
 ### POST /api/polls
 
@@ -361,9 +406,30 @@ Response:
 - 401 Unauthorized: Penjawab anonim belum masuk ke dalam poll
   - message: "You haven't joined into the poll yet"
 
-Set Cookie (JIKA tidak ada anonymous_id):
+Set Cookie (JIKA anonymous_id belum di-set):
 
-- anonymous_id (string)
+- anonymous_id (string): ID yg bersifat untuk mengidentifikasi pengguna selama cookie tidak dihapus, digunakan untuk menyimpan respon survey dan poll pengguna. Jika pengguna sudah ada cookie dengan anonymous_id, maka tidak di-override.
+
+
+### GET /api/polls/:id/questions/current
+
+Mengambil pertanyaan sekarang dari poll sesuai ID di URL
+
+Cookie:
+
+- anonymous_id
+- user_id
+
+Response:
+
+- 200 OK
+  - type (string)
+  - question (string)
+  - image? (string)
+  - options (string[]?)
+- 404 Not Found: Tidak ada poll dengan ID tersebut
+  - message: "No polls found with that ID"
+- 401 Unauthorized: Jika pengguna belum masuk ke dalam poll dan user_id bukan merupakan ID pemilik
 
 ### POST /api/polls/:id/questions
 
@@ -378,7 +444,6 @@ Request:
 - type (string)
 - question (string)
 - options (string[]?)
-
 
 Request Files:
 
@@ -395,7 +460,7 @@ Response:
 - 400 Bad Request: Format tidak sesuai
   - message: "Expected fields: type, question, and options if the type is 'checklist' or 'choice'"
 - 404 Not Found: Tidak ada poll dengan ID tersebut
-  - message: "No surveys found with that ID"
+  - message: "No polls found with that ID"
 - 401 Unauthorized: Jika user_id tidak sesuai dengan ID pemilik poll
 
 Real-Time Server => Client (Event: "newQuestion")
@@ -408,7 +473,7 @@ Real-Time Server => Client (Event: "newQuestion")
     - image? (string)
     - options (string[]?)
 
-### DELETE /api/polls/:id
+### PUT /api/polls/:id/close
 
 Menutup poll sesuai dengan ID yang dispesifikasikan URL
 
@@ -593,3 +658,228 @@ Response:
   - message: "This poll doesn't have any questions yet"
 - 401 Unauthorized: Penjawab anonim tidak masuk ke dalam poll atau hasil poll tidak dibuka untuk umum
   - message: "You didn't join the poll." or message: "The results of this poll can only be viewed by its creator."
+
+### POST /api/surveys/:id/randomize-link DAN POST /api/polls/:id/randomize-link
+
+Endpoint yang dapat digunakan untuk mengacak link akses dari suatu survey/poll tertentu berdasarkan ID.
+
+Cookie:
+- user_id
+
+Response:
+- 200 OK
+  - newLink (string): Link baru dari survey tersebut
+- 404 Not Found: Tidak ada survey dengan ID tersebut
+  - message: "No surveys found with that ID" OR message: "No polls found with that ID"
+- 401 Unauthorized: user_id bukan ID dari pemilik survey/poll
+
+### POST /api/surveys/:id/randomize-result-link DAN POST /api/polls/:id/randomize-result-link
+
+Endpoint yang dapat digunakan untuk mengacak link hasil dari suatu survey/poll tertentu berdasarkan ID.
+
+Cookie:
+- user_id
+
+Response:
+- 200 OK
+  - newLink (string): Link hasil baru dari survey tersebut
+- 404 Not Found: Tidak ada survey dengan ID tersebut
+  - message: "No surveys found with that ID" OR message: "No polls found with that ID"
+- 401 Unauthorized: user_id bukan ID dari pemilik survey/poll
+
+### GET /api/surveys/:link
+
+Endpoint yang dapat digunakan untuk mencari dan mengembalikan survey yang diasosiasikan dengan link yang diberikan.
+
+Cookie:
+- user_id
+
+Response:
+- 200 OK
+  - id (number)
+  - creator
+    - id (number)
+    - email (string)
+    - name (string)
+    - description (string)
+    - pfp (string)
+  - title (string)
+  - description (string)
+  - last_modified (string)
+  - is_public (boolean)
+  - link (string)
+  - close_time (string): Kapan survey terakhir diubah dalam format waktu ISO
+  - thumbnail (string)
+  - are_results_open (boolean): Apakah orang lain dapat mengakses hasil survey setelah mengisi survey tanpa diberikan link?
+  - questions[]
+    - type: string
+    - question: string
+    - required: boolean
+    - image_name (string?)
+- 404 Not Found: Survey tidak ditemukan
+  - message: "No surveys found with that link."
+- 401 Unauthorized: Survey tidak diberikan akses ke publik dan user_id tidak sesuai dengan id pemilik
+  - message: "You don't have access to this survey."
+
+Set Cookie (JIKA anonymous_id belum di-set):
+- anonymous_id (string): ID yg bersifat untuk mengidentifikasi pengguna selama cookie tidak dihapus, digunakan untuk menyimpan respon survey dan poll pengguna. Jika pengguna sudah ada cookie dengan anonymous_id, maka tidak di-override.
+
+
+### GET /api/polls/:link
+
+Endpoint yang dapat digunakan untuk mencari dan mengembalikan poll yang diasosiasikan dengan link yang diberikan.
+
+Cookie:
+- user_id
+- anonymous_id
+
+Response:
+- 200 OK
+  - title (string)
+    - description (string)
+    - creator
+      - id (number)
+      - email (string)
+      - name (string)
+      - description (string)
+      - pfp (string)
+    - start_time (string)
+    - end_time (string)
+    - thumbnail (string)
+- 404 Not Found: Poll tidak ditemukan
+  - message: "No polls found with that link."
+- 401 Unauthorized: Poll tidak diberikan akses ke publik dan user_id tidak sesuai dengan id pemilik
+  - message: "You don't have access to this poll."
+
+Set Cookie (JIKA anonymous_id belum di-set):
+- anonymous_id (string): ID yg bersifat untuk mengidentifikasi pengguna selama cookie tidak dihapus, digunakan untuk menyimpan respon survey dan poll pengguna. Jika pengguna sudah ada cookie dengan anonymous_id, maka tidak di-override.
+
+
+### GET /api/polls/:id/join
+
+Endpoint ini digunakan untuk menghubungkan partisipan ke halaman poll berdasarkan ID poll yang diberikan.
+
+Cookie:
+- anonymous_id
+- user_id
+
+Response:
+- 200 OK: Berhasil masuk
+- 404 Not Found: Poll tidak ditemukan
+- 304 Not Modified: user_id adalah ID pemilik poll atau sudah ada partisipan dengan anonymous_id yang sama
+
+Set Cookie (JIKA anonymous_id belum di-set):
+- anonymous_id (string): ID yg bersifat untuk mengidentifikasi pengguna selama cookie tidak dihapus, digunakan untuk menyimpan respon survey dan poll pengguna. Jika pengguna sudah ada cookie dengan anonymous_id, maka tidak di-override.
+
+### GET /api/surveys/public
+
+Endpoint ini digunakan untuk mendapatkan daftar survey dimana is_public di-set ke True.
+
+Query:
+- search (string): Kata kunci untuk mencari survey/poll
+- limit (number): Jumlah survey yang perlu ditampilkan. Default 20 jika tidak ada.
+- offset (number): ID dari survey sebagai offset untuk infinite-scrolling.
+
+Response:
+
+- 200 OK: Memberikan daftar survey publik yang tersedia sesuai dengan query.
+  - []
+    - id (number)
+    - creator
+      - id (number)
+      - email (string)
+      - name (string)
+      - description (string)
+      - pfp (string)
+    - title (string)
+    - description (string)
+    - last_modified (string)
+    - is_public (boolean)
+    - link (string)
+    - close_time (string): Kapan survey terakhir diubah dalam format waktu ISO
+    - thumbnail (string)
+    - are_results_open (boolean): Apakah orang lain dapat mengakses hasil survey setelah mengisi survey tanpa diberikan link?
+
+### GET /api/surveys/mine
+
+Endpoint ini digunakan untuk mendapatkan daftar survey dimiliki akun
+
+Cookie:
+- user_id
+
+Query:
+- search (string): Kata kunci untuk mencari survey/poll
+- limit (number): Jumlah survey yang perlu ditampilkan. Default 20 jika tidak ada.
+- offset (number): ID dari survey sebagai offset untuk infinite-scrolling.
+
+Response:
+- 200 OK
+  - []
+    - id (number)
+    - creator
+      - id (number)
+      - email (string)
+      - name (string)
+      - description (string)
+      - pfp (string)
+    - title (string)
+    - description (string)
+    - last_modified (string)
+    - is_public (boolean)
+    - link (string)
+    - close_time (string): Kapan survey terakhir diubah dalam format waktu ISO
+    - thumbnail (string)
+    - are_results_open (boolean): Apakah orang lain dapat mengakses hasil survey setelah mengisi survey tanpa diberikan link?
+- 401 Unauthorized: Tidak ada user dengan user_id tersebut
+
+### GET /api/polls/mine
+
+Endpoint ini digunakan untuk mendapatkan daftar poll dimiliki akun
+
+Cookie:
+- user_id
+
+Query:
+- search (string): Kata kunci untuk mencari survey/poll
+- limit (number): Jumlah poll yang perlu ditampilkan. Default 20 jika tidak ada.
+- offset (number): ID dari poll sebagai offset untuk infinite-scrolling.
+
+Response:
+- 200 OK
+  - []
+    - title (string)
+    - description (string)
+    - creator
+      - id (number)
+      - email (string)
+      - name (string)
+      - description (string)
+      - pfp (string)
+    - start_time (string)
+    - end_time (string)
+    - thumbnail (string)
+- 401 Unauthorized: Tidak ada user dengan user_id tersebut
+
+### DELETE /api/surveys/:id
+Menghapus survey secara permanen
+
+Cookie:
+- user_id
+
+Response:
+- 200 OK: Survey berhasil dihapus
+- 404 Not Found: Survey tidak ditemukan
+  - message: "No surveys found with that link."
+- 401 Unauthorized: user_id tidak sesuai dengan id pemilik
+
+### DELETE /api/polls/:id
+Menghapus poll secara permanen
+
+Cookie:
+- user_id
+
+Response:
+- 200 OK: Poll berhasil dihapus
+- 404 Not Found: Poll tidak ditemukan
+  - message: "No polls found with that link."
+- 401 Unauthorized: user_id tidak sesuai dengan id pemilik
