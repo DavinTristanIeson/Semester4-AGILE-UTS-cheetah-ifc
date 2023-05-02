@@ -109,6 +109,7 @@
 - Endpoint untuk mencari dan mengembalikan survey yang diasosiasikan dengan link yang diberikan [1]
 - Endpoint untuk menambahkan partisipan ke poll yang diasosiasikan dengan link yang diberikan [2]
 - Tabel *poll_participants* untuk menyimpan partisipan dari suatu poll [1]
+- Halaman untuk berpartisipasi/*join* dalam suatu poll [2]
 
 3. Sebagai user, saya ingin dapat mencari survey publik untuk diisi
 - Membuat endpoint untuk mendapatkan daftar survey publik [2]
@@ -133,6 +134,8 @@
 6. Sebagai user, saya ingin dapat mengedit informasi akun saya dan menghapus akun saya
 - Membuat halaman profil [3]
     - Popup konfirmasi hapus akun
+    - POV pemilik akun
+    - POV pengguna lain
 - Endpoint untuk modifikasi akun [3]
     - Edit informasi akun
     - Hapus akun
@@ -141,4 +144,4 @@
     - Endpoint untuk mengambil tampilan/*frontend* dari aplikasi [1]
     - Kontrol akses informasi dari endpoint, contohnya ketika mengambil info survey, pemilik akan mendapat semua info tapi penjawab tidak akan mendapat link dan link hasil karena bukan untuk dilihat mereka [1]
 
-**Total Story Point**: 30
+**Total Story Point**: 32
