@@ -85,3 +85,39 @@
 - Lebih sering meng-*update* Trello agar tim dapat lebih mudah menyimak *sprint progress*
 - *Product Owner* bertanggungjawab atas user story mana yang *Done* dan masih *Ongoing* di Trello.
 - *Sprint Planning* harus lebih men-*detail*
+
+# Sprint 3 (02/05/2023 s/d 03/05/2023)
+
+## Sprint Review
+
+**What went well?**
+- Menetapkan desain yang tetap sederhana
+
+**What could be improved?**
+-
+
+**What to STOP doing?**
+-
+
+**What to KEEP doing?**
+-
+
+**What to START doing?**
+- Tata letak *frame* di Figma dibuat lebih rapi
+
+## Sprint Retrospective
+
+**What went well?**
+- Cepat menyelesaikan projek
+
+**What could be improved?**
+- Estimasi waktu, kadang terlalu cepat, kadang terlalu lambat
+
+**What to STOP doing?**
+-
+
+**What to KEEP doing?**
+-
+
+**What to START doing?**
+-

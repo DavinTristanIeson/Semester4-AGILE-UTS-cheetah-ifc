@@ -187,3 +187,19 @@
 
 ### Sisa
 32 - 31 = 1
+
+## 03 Mei 2023
+
+### Davin Tristan Ieson
+-
+
+### Jansen Loman
+
+**Sudah**: Membuat endpoint untuk mengakses *frontend* [1]
+
+### Vincent Tandera
+
+**Sudah**: Commit hasil final
+
+### Sisa
+1 - 1 = 0
